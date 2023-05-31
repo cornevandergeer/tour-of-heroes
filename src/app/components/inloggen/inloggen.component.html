@@ -1,0 +1,21 @@
+<h2>Overzicht accounts:</h2>
+<ul class="accounts">
+  <li *ngFor="let account of accounts">
+    <hr>
+    <p>naam: {{account.naam}}</p>
+    <p>wachtwoord: {{account.wachtwoord}}</p>
+    <p>ingelogd: {{account.isIngelogd ? 'ja' : 'nee'}}</p>
+  </li>
+  <hr>
+</ul>
+
+<form (ngSubmit)="onSubmit()" #inlogForm="ngForm">
+  {{currentAccountId}}
+  <div class="form-group">
+    <input type="text" placeholder="naam" class="form-control" id="naam" required [(ngModel)]="account.naam" name="naam">
+    <p>Gebruikersnaam: {{account.naam}}</p>
+    <input type="text" placeholder="wachtwoord" class="form-control" id="wachtwoord" required [(ngModel)]="account.wachtwoord" name="wachtwoord">
+    <p>Wachtwoord: {{account.wachtwoord}}</p>
+    <button type="submit" class="btn btn-default" [disabled]="!inlogForm.form.valid" (click)="inloggen(); inlogForm.reset()">Inloggen</button>
+  </div>
+</form>
