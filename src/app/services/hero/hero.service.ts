@@ -5,13 +5,15 @@ import {Hero} from "../../components/model/hero";
 import {MessageService} from "../message/message.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { catchError, map, tap } from 'rxjs/operators';
+import {serverUrl} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root',
 })
 export class HeroService {
 
-  private heroesUrl = 'api/heroes';  // URL to web api
+  private heroesUrl = `${serverUrl}/heroes`;  // URL to web api
+
 
   /**
    * Handle Http operation that failed.
@@ -22,12 +24,14 @@ export class HeroService {
    */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
+      console.log("regel 1")
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
+      console.log("regel 2")
 
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
+      console.log("regel 3")
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -53,6 +57,7 @@ export class HeroService {
 
   /** GET heroes from the server */
   getHeroes(): Observable<Hero[]> {
+    console.log("get heroes")
     return this.http.get<Hero[]>(this.heroesUrl)
       .pipe(tap(_ => this.log('fetched heroes')),
         catchError(this.handleError<Hero[]>('getHeroes', []))

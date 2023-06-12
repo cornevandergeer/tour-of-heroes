@@ -10,7 +10,6 @@
 </ul>
 
 <form (ngSubmit)="onSubmit()" #inlogForm="ngForm">
-  {{currentAccountId}}
   <div class="form-group">
     <input type="text" placeholder="naam" class="form-control" id="naam" required [(ngModel)]="account.naam" name="naam">
     <p>Gebruikersnaam: {{account.naam}}</p>

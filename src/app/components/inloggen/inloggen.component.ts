@@ -12,8 +12,6 @@ import {InlogService} from "../../services/inlog/inlog.service";
 })
 export class InloggenComponent implements OnInit {
 
-  currentAccountId?: number;
-
   accounts: Account[] = [];
   account: Account = {
     id: undefined,
@@ -31,7 +29,6 @@ export class InloggenComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAccounts();
-    this.getAccount();
   }
 
   submitted = false;
@@ -46,22 +43,12 @@ export class InloggenComponent implements OnInit {
   }
 
 
-  getAccount(): void {
-    if (this.currentAccountId !== undefined) {
-      const id = this.currentAccountId
-      this.inlogService.getAccount(id)
-        .subscribe(account => this.account = account);
-      this.currentAccountId = this.account.id;
-    }
-  }
-
-  inloggen() {
+  inloggen()  {
     for (const acc of this.accounts) {
       if (this.account.naam === acc.naam && this.account.wachtwoord === acc.wachtwoord) {
         acc.isIngelogd = true
         this.inlogService.updateAccount(acc)
           .subscribe();
-        this.currentAccountId = acc.id;
       }
     }
 
