@@ -9,7 +9,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {HttpClientModule} from "@angular/common/http";
 import {HttpClientInMemoryWebApiModule} from "angular-in-memory-web-api";
-import {InMemoryDataService} from "./services/data/in-memory-data.service";
+// import {InMemoryDataService} from "./services/data/in-memory-data.service";
 import {HeroSearchComponent} from './components/hero-search/hero-search.component';
 import {InloggenComponent} from './components/inloggen/inloggen.component';
 
@@ -28,7 +28,7 @@ import {InloggenComponent} from './components/inloggen/inloggen.component';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {dataEncapsulation: false})
+    // HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {dataEncapsulation: false})
   ],
   providers: [
     // no need to place any providers due to the `providedIn` flag...

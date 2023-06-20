@@ -16,7 +16,7 @@ export class InloggenComponent implements OnInit {
   account: Account = {
     id: undefined,
     isIngelogd: false,
-    naam: "",
+    gebruikersnaam: "",
     wachtwoord: ""
 
   }
@@ -26,12 +26,12 @@ export class InloggenComponent implements OnInit {
     private inlogService: InlogService,
   ) {
   }
+  submitted = false;
 
   ngOnInit(): void {
     this.getAccounts();
   }
 
-  submitted = false;
 
   onSubmit() {
     this.submitted = true;
@@ -43,16 +43,38 @@ export class InloggenComponent implements OnInit {
   }
 
 
-  inloggen()  {
-    for (const acc of this.accounts) {
-      if (this.account.naam === acc.naam && this.account.wachtwoord === acc.wachtwoord) {
-        acc.isIngelogd = true
-        this.inlogService.updateAccount(acc)
-          .subscribe();
-      }
-    }
+  inloggen(): void {
+    const { gebruikersnaam, wachtwoord } = this.account;
 
+    this.inlogService.login(gebruikersnaam, wachtwoord).subscribe(
+      // data => {
+      //   this.tokenStorage.saveToken(data.accessToken);
+      //   this.tokenStorage.saveUser(data);
+      //
+      //   this.isLoginFailed = false;
+      //   this.isLoggedIn = true;
+      //   this.roles = this.tokenStorage.getUser().roles;
+      //   this.reloadPage();
+      // },
+      // err => {
+      //   this.errorMessage = err.error.message;
+      //   this.isLoginFailed = true;
+      // }
+    );
   }
+
+
+
+  // inloggen()  {
+  //   for (const acc of this.accounts) {
+  //     if (this.account.gebruikersnaam === acc.gebruikersnaam && this.account.wachtwoord === acc.wachtwoord) {
+  //       acc.isIngelogd = true
+  //       this.inlogService.updateAccount(acc)
+  //         .subscribe();
+  //     }
+  //   }
+  //
+  // }
 
 //
 //

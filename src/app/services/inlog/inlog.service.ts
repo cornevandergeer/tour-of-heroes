@@ -5,6 +5,7 @@ import {MessageService} from "../message/message.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, tap} from "rxjs/operators";
 import {Hero} from "../../components/model/hero";
+import {serverUrl} from "../../environments/environment";
 
 
 @Injectable({
@@ -12,7 +13,11 @@ import {Hero} from "../../components/model/hero";
 })
 export class InlogService {
 
-  private accountsUrl = 'api/accounts';  // URL to web api
+  private accountsUrl = `${serverUrl}/accounts`;  // URL to web api
+
+
+  // private heroesUrl = `${serverUrl}/heroes`;  // URL to web api
+
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -50,12 +55,18 @@ export class InlogService {
   }
 
   updateAccount(account: Account): Observable<any> {
-    return this.http.put(this.accountsUrl, account, this.httpOptions).pipe(
-      tap(_ => this.log(`ingelogd=${account.naam}`)),
+    return this.http.post(this.accountsUrl, account, this.httpOptions).pipe(
+      tap(_ => this.log(`ingelogd=${account.gebruikersnaam}`)),
       catchError(this.handleError<any>('inloggen'))
     );
   }
 
+  login(gebruikersnaam: string, wachtwoord: string): Observable<any> {
+    return this.http.post(this.accountsUrl, {
+      gebruikersnaam,
+      wachtwoord
+    }, this.httpOptions);
+  }
 
   private log(message: string) {
     this.messageService.add(`InlogService: ${message}`);

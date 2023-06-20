@@ -14,7 +14,6 @@ export class HeroService {
 
   private heroesUrl = `${serverUrl}/heroes`;  // URL to web api
 
-
   /**
    * Handle Http operation that failed.
    * Let the app continue.
@@ -24,14 +23,12 @@ export class HeroService {
    */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.log("regel 1")
+
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
-      console.log("regel 2")
 
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
-      console.log("regel 3")
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -46,6 +43,8 @@ export class HeroService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
+
+
   /** GET hero by id. Will 404 if id not found */
   getHero(id: number): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
@@ -57,16 +56,20 @@ export class HeroService {
 
   /** GET heroes from the server */
   getHeroes(): Observable<Hero[]> {
-    console.log("get heroes")
     return this.http.get<Hero[]>(this.heroesUrl)
-      .pipe(tap(_ => this.log('fetched heroes')),
-        catchError(this.handleError<Hero[]>('getHeroes', []))
+      .pipe(
+        tap(_ => this.log('fetched heroes')), // oke rwponse
+        catchError(this.handleError<Hero[]>('getHeroes', [])) // error response
       )
   }
 
   /** PUT: update the hero on the server */
   updateHero(hero: Hero): Observable<any> {
-    return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
+
+    const url = `${this.heroesUrl}/${hero.id}`;
+
+
+    return this.http.put(url, hero, this.httpOptions).pipe(
       tap(_ => this.log(`updated hero id=${hero.id}`)),
       catchError(this.handleError<any>('updateHero'))
     );

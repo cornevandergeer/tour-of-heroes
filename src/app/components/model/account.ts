@@ -1,6 +1,6 @@
 export interface Account {
   id?: number;
-  naam: string;
+  gebruikersnaam: string;
   wachtwoord: string;
   isIngelogd?: boolean;
 }
